@@ -1,0 +1,8 @@
+---
+- name: playbook for webserver
+  hosts: webservers
+  become: yes
+
+  roles:
+    - role: software/php
+  
