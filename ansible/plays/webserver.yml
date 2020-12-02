@@ -5,4 +5,5 @@
 
   roles:
     - role: software/php
+    - role: software/apache2
   
