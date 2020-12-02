@@ -1,10 +1,10 @@
 ---
-- name: playbook for webserver
+- name: Playbook for Webserver
   hosts: webservers
   become: yes
 
   roles:
+    - role: software/git
     - role: software/php
     - role: software/apache2
-    - role: software/git
   
