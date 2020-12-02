@@ -1,6 +1,6 @@
 ---
 - name: Started PHP
   service:
-    name: php.service
+    name: php
     state: restarted
 
