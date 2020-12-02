@@ -1,19 +1,11 @@
 {
     "builders": [{
         "type": "amazon-ebs",
-        "access_key": "ASIA5547CE7RP3YU43X3",
-        "secret_key": "Jt/Ler+uhxdKwgLrZ3R4ND9yn93UJNnvZsH5J/yM",
-        "token": "FwoGZXIvYXdzEBYaDGxON34w06V6LAERZyKuAYC+7l0/v8G0d+C1KPWHjkD082Ah4g5+A80O/5148T2YzzbInwb1WQhjd6q0Wn9UvFgxpZABoDFo1N2doF/8E1cmRXcGVb2JxOfNQeVXa+rOUnGOxH7yVmUstnVs0QYIBA6hhTd7eEtVp04G9U1xqWnc3kixuT8144hvCjbnfpj/FLQlskhIdC30ByzijK3lGCPBhyvDc2vBJmKuzHL9VS16H8YW3uPZv4KX8E6cdijs7Jj+BTIt5srcUz0GDPhnjulZuECTiyyccNk9XUARs9Oiy8LugAkly+limdnUI+7X/hbs",
+        "access_key": "ASIA5547CE7RCDO4ARFK",
+        "secret_key": "s3E5782C5r2bYTiI7KbK6MmujZOjZXAtxlmU/w+2",
+        "token": "FwoGZXIvYXdzEDAaDL2hrNljrFqEouz6PiKuAZqIclqVnCa7MlYbcS46t1dE/7i3dRc1Labc4X0a5yt5H9GLaW7bPdpHL3ak+Cv0rwm+0pni5GHKUxUokJshlR+LjwFHqwf8ba9tXmUSqQ7GGGmgek9x221A5WXEjmVlBeww40c82u/tmlbHfm8zDbaBy6lp2SEZpKlAE+RIm3kdiY3eRRRJ7Ncefnmz2Gf7lkehJT/VWxVlySTdAKhxVOEaBt2/EZManIWPRD1nGiiJzp7+BTIt7ZvG066cMb6vgZYhWR0vwqeQoYKvY3QTb0zl8toziOw0hSIWuO465fqHRF5j",
         "region": "us-east-1",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
-                "root-device-type": "ebs"
-            },
-            "owners": ["957574424546"],
-            "most_recent": true
-        },
+        "source_ami": "ami-0885b1f6bd170450c",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
