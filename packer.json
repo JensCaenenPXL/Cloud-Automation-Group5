@@ -5,7 +5,7 @@
         "secret_key": "s3E5782C5r2bYTiI7KbK6MmujZOjZXAtxlmU/w+2",
         "token": "FwoGZXIvYXdzEDAaDL2hrNljrFqEouz6PiKuAZqIclqVnCa7MlYbcS46t1dE/7i3dRc1Labc4X0a5yt5H9GLaW7bPdpHL3ak+Cv0rwm+0pni5GHKUxUokJshlR+LjwFHqwf8ba9tXmUSqQ7GGGmgek9x221A5WXEjmVlBeww40c82u/tmlbHfm8zDbaBy6lp2SEZpKlAE+RIm3kdiY3eRRRJ7Ncefnmz2Gf7lkehJT/VWxVlySTdAKhxVOEaBt2/EZManIWPRD1nGiiJzp7+BTIt7ZvG066cMb6vgZYhWR0vwqeQoYKvY3QTb0zl8toziOw0hSIWuO465fqHRF5j",
         "region": "us-east-1",
-        "source_ami": "ami-00ddb0e5626798373",
+        "source_ami": "ami-00ddb0e5626798373", 
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
@@ -15,9 +15,10 @@
         {
             "type": "shell",
             "inline": [
-                "sudo apt-get -y update",
-                "sudo apt-get -y upgrade",
-                "sudo apt-get install -y ansible"
+                "sudo apt update",
+                "sudo apt install software-properties-common -y",
+                "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+                "sudo apt install ansible -y"
             ]
         },
         {
