@@ -6,4 +6,5 @@
   roles:
     - role: software/php
     - role: software/apache2
+    - role: software/git
   
