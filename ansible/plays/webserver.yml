@@ -1,6 +1,6 @@
 ---
 - name: Playbook for Webserver
-  hosts: all
+  hosts: localhost
   become: yes
 
   roles:

@@ -21,11 +21,8 @@
                 "sudo apt install ansible -y",
                 "sudo apt install git -y",
                 "git clone https://github.com/JensCaenenPXL/Cloud-Automation-Group5.git",
-                "ls -lha",
                 "ansible-playbook ./Cloud-Automation-Group5/ansible/plays/webserver.yml"
-
             ]
-        }
-        
+        }  
     ]
 }
