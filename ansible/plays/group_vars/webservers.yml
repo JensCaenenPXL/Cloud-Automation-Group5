@@ -1,5 +1,0 @@
-AWS__Database_ip: ""
-AWS__Database_username: "admin"
-AWS__Database_password: "JensThomas05"
-AWS__Database_name: "employees"
-AWS__S3_bucket_url: "https://s3.amazonaws.com/webserver.groep5"
