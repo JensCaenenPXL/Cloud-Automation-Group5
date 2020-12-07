@@ -6,11 +6,11 @@
 
 - name: Install PHPXML
   apt:
-    name: php7.4-xml
+    name: php-xml
     state: present
 
 - name: Install PHPMySQL
   apt:
-    name: php7.4-mysql
+    name: php-mysql
     state: present
   notify: Started PHP
