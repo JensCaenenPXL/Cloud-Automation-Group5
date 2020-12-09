@@ -1,4 +1,0 @@
----
-- name: Started PHP
-  shell: "systemclt restart php"
-
