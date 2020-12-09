@@ -42,7 +42,7 @@ data "aws_ami" "aws-linux" {
 
   filter {
     name = "name"
-    values = ["Webserver_edit"]
+    values = ["Webserver"]
   }
 }
 
