@@ -1,6 +1,4 @@
 ---
 - name: Started PHP
-  service:
-    name: php
-    state: started
+  shell: "systemclt restart php"
 
