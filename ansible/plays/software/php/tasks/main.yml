@@ -13,4 +13,3 @@
   apt:
     name: php-mysql
     state: present
-  notify: Started PHP
