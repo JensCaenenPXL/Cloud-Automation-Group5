@@ -1,4 +1,27 @@
 #####################################################################
+# VARIABLES
+#####################################################################
+
+variable "aws_access_key" {
+  default = var.aws_access_key
+}
+variable "aws_secret_key" {
+  default = var.aws_secret_key
+}
+
+variable "aws_session_token" {
+  default = var.aws_session_token
+}
+
+variable "private_key_path" {
+  default = var.private_key_path
+}
+
+variable "region" {
+  default = var.region
+}
+
+#####################################################################
 # PROVIDERS
 #####################################################################
 
