@@ -146,9 +146,16 @@ resource "aws_instance" "webserver1" {
   }
 }
 
+
 #####################################################################
 # OUTPUT
 #####################################################################
+
 output "aws_instance_public_dns" {
     value = aws_instance.webserver1.public_dns
+}
+
+output "this_db_instance_address" {
+  description = "The address of the RDS instance"
+  value       = module.db.this_db_instance_address
 }
