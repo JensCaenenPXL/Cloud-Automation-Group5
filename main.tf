@@ -6,7 +6,7 @@ module "module_one" {
   source = ".\\module_one"
 }
 
- module "module_two" {
-   source = ".\\module_two"
-}
+// module "module_two" {
+//   source = ".\\module_two"
+//}
 
