@@ -7,6 +7,6 @@
     - role: software/git
     - role: software/php
     - role: software/apache2
-    - role: software/composer
     - role: software/mysqlClient
+    - role: software/composer
   

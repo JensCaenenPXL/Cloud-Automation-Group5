@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7RMHGACBPD"
+  default = "ASIA5547CE7RPEJPBXOD"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "aUFw2Qo7J9RJqF91jE6rE8B6fQbWnOWOstb/TzoP"
+  default = "qitUMc32/pI52OhR/t2ZDqbvPstQUoIZFWl4Kcy2"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzEB8aDDYxIaEwnkGYBEcJFCKuAaVXec6VG6mdbyMGLAc9LRY6wKvzJ27oMW0PGatBhl/eE8gGZmAz4rhzWSpue9j66ylBUZAGbpP7a0MNzndrno77kyezANH9J0vxVWbDB03e26020mtX2N5I/Vn4lh7fNCwUfZnbLu/GUmvXwabj1r47yAj9q8JLr0JwfHRZk2ok4VVK6+fT9kVSyCzasPnXGY6qMnaGlq/DX5fNVuDvNXP8Qq3kI26Rw1AsCc6sYyjLg9P+BTItlsgxE2+Vwr1yVT7boRZRULXmpOpqdiwjI8AqIgrbpB5DFS/ef/fwDpVADaqj"
+  default = "FwoGZXIvYXdzECIaDNCK8OPBSOFVC7WmzyKuAa2rqnMSuC8YXAyzrfKfQNLhwQjIddf9774tu37kyLPcFH3hrHKQ6GtokCmx+KF5ogiC8pJXkXN9+AKg9Ich5Vbmz9MkNcf2uFgD1qjfaHzKYoSt9NDqDEaoOb0JG8tR+XLNfwhYuKgHUwGv3d4ijCfdPsk0ewd+dx1k4N8AqueUfW0DB/teUvJeJa4pRQvf1mwDVxSDl8Hor8lLQ2991J7IDulABNh2mTG9VItiPijU69P+BTItpAkP741e/acN+ia+54qZWmL8ZGQwFBWAuSd9P68O3249LgaFvHIAl57DO3ud"
 }
 
 variable "private_key_path" {
@@ -90,19 +90,7 @@ resource "aws_security_group" "webserver_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [aws_security_group.database_security_group.id]
-  }
-
-  egress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [aws_security_group.database_security_group.id]
-  }
+  
 }
 
 resource "aws_security_group" "database_security_group" {
@@ -123,6 +111,30 @@ resource "aws_security_group" "database_security_group" {
     protocol        = "tcp"
     security_groups = [aws_security_group.webserver_security_group.id]
   }
+}
+
+resource "aws_security_group_rule" "webserver_security_group_edit1" {
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  security_group_id = aws_security_group.webserver_security_group.id
+  source_security_group_id = aws_security_group.webserver_security_group.id
+  depends_on = [
+    aws_security_group.webserver_security_group,
+  ]
+}
+
+resource "aws_security_group_rule" "webserver_security_group_edit2" {
+  type              = "egress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  security_group_id = aws_security_group.webserver_security_group.id
+  source_security_group_id = aws_security_group.webserver_security_group.id
+  depends_on = [
+    aws_security_group.webserver_security_group,
+  ]
 }
 
 module "db" {
