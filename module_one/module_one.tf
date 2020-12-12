@@ -124,3 +124,12 @@ resource "local_file" "key_file" {
   content = tls_private_key.webserver_private_key.private_key_pem
   filename = "Webserver.pem"
 }
+
+#####################################################################
+# OUTPUT
+#####################################################################
+
+output "this_db_instance_address" {
+  description = "The address of the RDS instance"
+  value = module.db.this_db_instance_address
+}
