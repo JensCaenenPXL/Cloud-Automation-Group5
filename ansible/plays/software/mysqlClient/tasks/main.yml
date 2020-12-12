@@ -3,3 +3,6 @@
   apt:
     name: mysql-client
     state: present
+
+- name: fill database
+  shell:  mysql -u admin --password=${{AWS__Database_password}} -h ${{AWS__Database_ip}} < /var/www/html/2TIN_ResearchProject/employees.sql

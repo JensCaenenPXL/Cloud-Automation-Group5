@@ -118,7 +118,7 @@ resource "aws_security_group_rule" "webserver_security_group_edit1" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  security_group_id = aws_security_group.webserver_security_group.id
+  security_group_id = aws_security_group.database_security_group.id
   source_security_group_id = aws_security_group.webserver_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
@@ -130,7 +130,7 @@ resource "aws_security_group_rule" "webserver_security_group_edit2" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  security_group_id = aws_security_group.webserver_security_group.id
+  security_group_id = aws_security_group.database_security_group.id
   source_security_group_id = aws_security_group.webserver_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
