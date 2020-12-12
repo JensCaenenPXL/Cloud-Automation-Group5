@@ -3,20 +3,25 @@
 #####################################################################
 
 variable "aws_access_key" {
-  default = "ASIA5547CE7RBDF2N24H"
+  type = string
+  default = "ASIA5547CE7RMHGACBPD"
 }
 variable "aws_secret_key" {
-  default = "ovlcxnrDpTMBjiPvI7hmfGCYZ1pjKCvDHvKDr/0J"
+  type = string
+  default = "aUFw2Qo7J9RJqF91jE6rE8B6fQbWnOWOstb/TzoP"
 }
 
 variable "aws_session_token" {
-  default = "FwoGZXIvYXdzENj//////////wEaDBFcYiUyjkax0AD6DiKuAauWcaeu1EuCnxzz7U1h0/9QCVmipoY524y6OZlkhWqXpRVvbRW0YGI6yPJ1zDOEPWcRMfN1IvF6mi4PWtPWqjaGL+fCnHKNCh78i9HOmzmjXi43ginO3JHOn7oik2/zwib743Y50Q2jcMHv5xUclB2Hf7EDJ2Rtqp+bStNKKy/YMwK0pAhvy19sEIJAnXhM1yVNqHPbLzgVqrdXRoEUhj73Q5p/w0smTZ1g5OEnlSi0yMP+BTIt4q0B62cqEs+bewc5CfJF8eS27WbBaHmLEe4e0aBd1HFCapFyq4mo9BVxD/Gu"
+  type = string
+  default = "FwoGZXIvYXdzEB8aDDYxIaEwnkGYBEcJFCKuAaVXec6VG6mdbyMGLAc9LRY6wKvzJ27oMW0PGatBhl/eE8gGZmAz4rhzWSpue9j66ylBUZAGbpP7a0MNzndrno77kyezANH9J0vxVWbDB03e26020mtX2N5I/Vn4lh7fNCwUfZnbLu/GUmvXwabj1r47yAj9q8JLr0JwfHRZk2ok4VVK6+fT9kVSyCzasPnXGY6qMnaGlq/DX5fNVuDvNXP8Qq3kI26Rw1AsCc6sYyjLg9P+BTItlsgxE2+Vwr1yVT7boRZRULXmpOpqdiwjI8AqIgrbpB5DFS/ef/fwDpVADaqj"
 }
 
 variable "private_key_path" {
+  type = string
   default = "./key"
 }
 
 variable "region" {
+  type = string
   default = "us-east-1"
 }
