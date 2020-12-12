@@ -1,9 +1,9 @@
 {
     "builders": [{
         "type": "amazon-ebs",
-        "access_key": "ASIA5547CE7RPEJPBXOD",
-        "secret_key": "qitUMc32/pI52OhR/t2ZDqbvPstQUoIZFWl4Kcy2",
-        "token": "FwoGZXIvYXdzECIaDNCK8OPBSOFVC7WmzyKuAa2rqnMSuC8YXAyzrfKfQNLhwQjIddf9774tu37kyLPcFH3hrHKQ6GtokCmx+KF5ogiC8pJXkXN9+AKg9Ich5Vbmz9MkNcf2uFgD1qjfaHzKYoSt9NDqDEaoOb0JG8tR+XLNfwhYuKgHUwGv3d4ijCfdPsk0ewd+dx1k4N8AqueUfW0DB/teUvJeJa4pRQvf1mwDVxSDl8Hor8lLQ2991J7IDulABNh2mTG9VItiPijU69P+BTItpAkP741e/acN+ia+54qZWmL8ZGQwFBWAuSd9P68O3249LgaFvHIAl57DO3ud",
+        "access_key": "ASIA5547CE7RLWX6IQ54",
+        "secret_key": "j8g9pmO3is6yqaeSXitgL8GoZLskQbrxljxRR5ZG",
+        "token": "FwoGZXIvYXdzECUaDOBWswDFHa4tCzjOuCKuAeNcNAt40J4RWi2Xukc4ZT5+k67D6TF4UOuU7LrFQAVV7zoEtnqVT1q4H/z0Zzld3+ZPDRcXRkorpiwsmwlSBN/ndnDEbpsOJKcLVmEst9RY9HxOqoIb2HxP/itHIxzMrgMm32IymXmqUKmMFmy6rp34I5IvfK4ktrp7+o/c6lut1S/0/L0ClstNZJIxJVOtEgU+TMXZyS03epddRcc7pTcVDPZ2bDDvaUoG77Hg7ijtutT+BTItGWZe2gO3GRi3YyTdq/yh0ZbHHBstn3O1ymZUS94ep6dqaLtpJz3asB8+/FdM",
         "region": "us-east-1",
         "source_ami": "ami-00ddb0e5626798373",
         "instance_type": "t2.micro",
