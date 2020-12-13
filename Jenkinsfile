@@ -19,6 +19,9 @@ pipeline {
         }
         stage('Execute packer.json') {
             steps {
+                echo 'Pushing the localhost.yml to GitHub'
+                sh 'git commit -m "Updated localhost.yml" -a'
+                sh 'git push'
                 echo 'Running packer.json'
                 sh 'packer build packer.json'
             }
