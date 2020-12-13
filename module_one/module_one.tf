@@ -62,8 +62,6 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
-<<<<<<< HEAD
-=======
 resource "aws_elb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
@@ -108,7 +106,6 @@ resource "aws_elb" "webserver_loadbalancer" {
   }
 }
 
->>>>>>> 549da43c5e4fbaa30ab3c67c41c0342f8472008f
 resource "aws_launch_template" "webserver_launch_template" {
   name_prefix   = "webserver_launch_template"
   image_id      = data.aws_ami.aws-linux.id
