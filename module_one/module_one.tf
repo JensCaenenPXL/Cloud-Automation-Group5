@@ -1,5 +1,5 @@
 #####################################################################
-# VARIABLES, PROVIDERS & DATA
+# VARIABLES
 #####################################################################
 
 variable "aws_access_key" {
@@ -26,6 +26,10 @@ variable "region" {
   default = "us-east-1"
 }
 
+#####################################################################
+# PROVIDERS
+#####################################################################
+
 provider "aws" {
   region     = var.region
   access_key = var.aws_access_key
@@ -34,15 +38,17 @@ provider "aws" {
 }
 
 #####################################################################
-# FASE 1
+# DATA
 #####################################################################
 
-# DATA
 data "aws_subnet_ids" "default_subnet_id" {
   vpc_id = aws_default_vpc.default.id
 }
 
+#####################################################################
 # RESOURCES
+#####################################################################
+
 resource "aws_default_vpc" "default" {}
 resource "aws_security_group" "webserver_security_group" {
   name        = "Webserver"
@@ -204,11 +210,6 @@ resource "local_file" "localhost_yml" {
   filename = "./ansible/plays/host_vars/localhost.yml"
 }
 
-#####################################################################
-# FASE 2
-#####################################################################
-
-# RESOURCES
 resource "null_resource" "run_packer" {
   provisioner "local-exec" {
     command = "packer build packer.json"
@@ -218,6 +219,7 @@ resource "null_resource" "run_packer" {
   ]
 }
 
+<<<<<<< HEAD:terraform.tf
 #####################################################################
 # FASE 3
 #####################################################################
@@ -258,3 +260,5 @@ resource "aws_autoscaling_group" "webserver_autoscaling_group" {
   ]
 }
 
+=======
+>>>>>>> 4be71686b3da65546d1e9b1c71ec44226f25d1c9:module_one/module_one.tf
