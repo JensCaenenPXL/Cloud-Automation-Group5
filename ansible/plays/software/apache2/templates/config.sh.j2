@@ -1,0 +1,10 @@
+<?php
+    require('vendor/autoload.php');
+    // Define mysql server settings
+    $serverName = "{{AWS__Database_ip}}";
+    $username = "{{AWS__Database_username}}";
+    $password = "{{AWS__Database_password}}";
+    $dbName = "{{AWS__Database_name}}";
+
+    // Create a new mysqli connection. Remember to enable this in php.ini !!
+    $conn = new mysqli($serverName, $username, $password, $dbName);
