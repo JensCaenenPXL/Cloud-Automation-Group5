@@ -1,21 +1,21 @@
 {
     "builders": [{
         "type": "amazon-ebs",
-        "access_key": "ASIA5547CE7RHYH6SVNR",
-        "secret_key": "TPJuNDBCa+LnDm2e5wlkexQde+lw4P4/vnmfisE/",
-        "token": "FwoGZXIvYXdzEDcaDMYek6edPP4BUR1gXCKuAWX0NLSn6dofwe+n/rSY1s+heGrdxWc9yRSLsU+5aJ+1L4742IP1lot7/Kg357d6HPGugLi2RXFItL0Jq/1C1IpTHKh55Ro+211X3O9UZxruTN6BL9XVNenti2jANG7Ar0AP4MhNj/3o6lmTVrZSSCvwMBNVdisU5qQxLc82lOfsGLxUoHFpxZWs+pazbK+FIl97K95BD4QqDZ0V844m5S+RGFP3kquGXZpGEDrWYSiKttj+BTIt//JHX+ipb7WODcz1699hjJlUJk/EcHXuKvcj34GxMYw3NRx9hNZO/0tvUKtJ",
+        "access_key": "ASIA5547CE7RK4UO6EVG",
+        "secret_key": "W3me3sVucltJ8/OWOX/61YSfO8rYA/klN91Ri/fq",
+        "token": "FwoGZXIvYXdzEDgaDENhuTVJ+t4syTmMLiKuAfsH/HL3pKO/9cNCGpXg9go8mC2UTT04rmoGMu4fZz8HLKK5Ry40HQT8T8QmPBSeIQJzXuhMi6suuNUrzVucig8g/kbSGnHIrq5nHqQ5XcBbSwkyY6Vk2sPpnXXWbLfBb4CNq01O8wi0jQznPZekaA1C1igFHdE2TJxOItDxxdFcmevdKZ0T5oVdtLdB96AfTkiO6Gqb9Qf5js+wqtIYSZkKQB+yR2E03Z7rj19WsCiqxdj+BTItlBFRwl1Wv9pMLPzo89L1SsWLbb0Nf4uKAbEuWut6OvBZ8tCvBSpduY3W8AZK",
         "region": "us-east-1",
         "source_ami": "ami-00ddb0e5626798373",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
-        "security_group_id": "sg-0a19385ebf7f2d3aa",
+        "security_group_id": "sg-0bbd82e9c26e685f3",
         "force_deregister": true
     }],
     "provisioners": [
         {
             "type": "file",
-            "source": "./ansible",
+            "source": "../ansible",
             "destination": "./"
         },  
         {

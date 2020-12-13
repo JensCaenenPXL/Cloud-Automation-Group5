@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7RKGJABF7T"
+  default = "ASIA5547CE7RK4UO6EVG"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "Qd8dCobuqW3Bxfxsjr40ocp4JLm11XzlGYYxJWlm"
+  default = "W3me3sVucltJ8/OWOX/61YSfO8rYA/klN91Ri/fq"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzEDQaDM+D+3kbuSQgT3xa8CKuAcg3x801g9RH//g+KFkI1FeT80c7oSfS4b2mVHhzgD+wHI8v4xMYOM7ZgqcfXxs2CVww6LUPB/ePQPrqqfmPqNwgjVM2/4HVL3+cguvA+6AOyfQViIb8HRp3olNlBPTkShr1AKlZgv9Y9l4zJoNInrBHZX+KcQwsvzrG+fUm+HBl5HhubW1KmkUzgiwOJKDOzFYHonUGr+MxdxxNh1/C0wj1bQxGsCBViFBwKq7Q9yiA4tf+BTItNDwmaH6zgiMx5F9fqhoE+hp3yH7ztZ21Ys+b5dTUbC/NH9YirfyrXj35uu6o"
+  default = "FwoGZXIvYXdzEDgaDENhuTVJ+t4syTmMLiKuAfsH/HL3pKO/9cNCGpXg9go8mC2UTT04rmoGMu4fZz8HLKK5Ry40HQT8T8QmPBSeIQJzXuhMi6suuNUrzVucig8g/kbSGnHIrq5nHqQ5XcBbSwkyY6Vk2sPpnXXWbLfBb4CNq01O8wi0jQznPZekaA1C1igFHdE2TJxOItDxxdFcmevdKZ0T5oVdtLdB96AfTkiO6Gqb9Qf5js+wqtIYSZkKQB+yR2E03Z7rj19WsCiqxdj+BTItlBFRwl1Wv9pMLPzo89L1SsWLbb0Nf4uKAbEuWut6OvBZ8tCvBSpduY3W8AZK"
 }
 
 variable "private_key_path" {
@@ -226,6 +226,11 @@ resource "local_file" "localhost_yml" {
     AWS__Database_name: "employees"
     AWS__S3_bucket_url: "https://s3.amazonaws.com/webserver.groep5"
     DOC
-  filename = "./ansible/plays/host_vars/localhost.yml"
+  filename = "../ansible/plays/host_vars/localhost.yml"
 }
 
+resource "null_resource" "run_packer" {
+  provisioner "local-exec" {
+    command = "packer build ../packer.json"
+  }
+}
