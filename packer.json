@@ -1,14 +1,15 @@
 {
     "builders": [{
         "type": "amazon-ebs",
-        "access_key": "ASIA5547CE7RLWX6IQ54",
-        "secret_key": "j8g9pmO3is6yqaeSXitgL8GoZLskQbrxljxRR5ZG",
-        "token": "FwoGZXIvYXdzECUaDOBWswDFHa4tCzjOuCKuAeNcNAt40J4RWi2Xukc4ZT5+k67D6TF4UOuU7LrFQAVV7zoEtnqVT1q4H/z0Zzld3+ZPDRcXRkorpiwsmwlSBN/ndnDEbpsOJKcLVmEst9RY9HxOqoIb2HxP/itHIxzMrgMm32IymXmqUKmMFmy6rp34I5IvfK4ktrp7+o/c6lut1S/0/L0ClstNZJIxJVOtEgU+TMXZyS03epddRcc7pTcVDPZ2bDDvaUoG77Hg7ijtutT+BTItGWZe2gO3GRi3YyTdq/yh0ZbHHBstn3O1ymZUS94ep6dqaLtpJz3asB8+/FdM",
+        "access_key": "ASIA5547CE7RKGJABF7T",
+        "secret_key": "Qd8dCobuqW3Bxfxsjr40ocp4JLm11XzlGYYxJWlm",
+        "token": "FwoGZXIvYXdzEDQaDM+D+3kbuSQgT3xa8CKuAcg3x801g9RH//g+KFkI1FeT80c7oSfS4b2mVHhzgD+wHI8v4xMYOM7ZgqcfXxs2CVww6LUPB/ePQPrqqfmPqNwgjVM2/4HVL3+cguvA+6AOyfQViIb8HRp3olNlBPTkShr1AKlZgv9Y9l4zJoNInrBHZX+KcQwsvzrG+fUm+HBl5HhubW1KmkUzgiwOJKDOzFYHonUGr+MxdxxNh1/C0wj1bQxGsCBViFBwKq7Q9yiA4tf+BTItNDwmaH6zgiMx5F9fqhoE+hp3yH7ztZ21Ys+b5dTUbC/NH9YirfyrXj35uu6o",
         "region": "us-east-1",
         "source_ami": "ami-00ddb0e5626798373",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
+        "security_group_id": "sg-04602e8db71d6a9cd",
         "force_deregister": true
     }],
     "provisioners": [

@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7RPEJPBXOD"
+  default = "ASIA5547CE7RKGJABF7T"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "qitUMc32/pI52OhR/t2ZDqbvPstQUoIZFWl4Kcy2"
+  default = "Qd8dCobuqW3Bxfxsjr40ocp4JLm11XzlGYYxJWlm"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzECIaDNCK8OPBSOFVC7WmzyKuAa2rqnMSuC8YXAyzrfKfQNLhwQjIddf9774tu37kyLPcFH3hrHKQ6GtokCmx+KF5ogiC8pJXkXN9+AKg9Ich5Vbmz9MkNcf2uFgD1qjfaHzKYoSt9NDqDEaoOb0JG8tR+XLNfwhYuKgHUwGv3d4ijCfdPsk0ewd+dx1k4N8AqueUfW0DB/teUvJeJa4pRQvf1mwDVxSDl8Hor8lLQ2991J7IDulABNh2mTG9VItiPijU69P+BTItpAkP741e/acN+ia+54qZWmL8ZGQwFBWAuSd9P68O3249LgaFvHIAl57DO3ud"
+  default = "FwoGZXIvYXdzEDQaDM+D+3kbuSQgT3xa8CKuAcg3x801g9RH//g+KFkI1FeT80c7oSfS4b2mVHhzgD+wHI8v4xMYOM7ZgqcfXxs2CVww6LUPB/ePQPrqqfmPqNwgjVM2/4HVL3+cguvA+6AOyfQViIb8HRp3olNlBPTkShr1AKlZgv9Y9l4zJoNInrBHZX+KcQwsvzrG+fUm+HBl5HhubW1KmkUzgiwOJKDOzFYHonUGr+MxdxxNh1/C0wj1bQxGsCBViFBwKq7Q9yiA4tf+BTItNDwmaH6zgiMx5F9fqhoE+hp3yH7ztZ21Ys+b5dTUbC/NH9YirfyrXj35uu6o"
 }
 
 variable "private_key_path" {
@@ -118,8 +118,8 @@ resource "aws_security_group_rule" "webserver_security_group_edit1" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  security_group_id = aws_security_group.database_security_group.id
-  source_security_group_id = aws_security_group.webserver_security_group.id
+  security_group_id = aws_security_group.webserver_security_group.id
+  source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
   ]
@@ -130,8 +130,8 @@ resource "aws_security_group_rule" "webserver_security_group_edit2" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  security_group_id = aws_security_group.database_security_group.id
-  source_security_group_id = aws_security_group.webserver_security_group.id
+  security_group_id = aws_security_group.webserver_security_group.id
+  source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
   ]
