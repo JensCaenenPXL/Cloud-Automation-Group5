@@ -8,15 +8,19 @@ pipeline {
                 sh 'packer -version'
             }
         }
-        stage('Destroy existing infrastructure') {
-            steps {
-                echo 'Destroying existing infrastructure'
-                dir('module_one') {
-                    sh 'terraform init'
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
+        //stage('Destroy existing infrastructure') {
+        //    steps {
+        //        echo 'Destroying existing infrastructure'
+        //        dir('module_one') {
+        //            sh 'terraform init'
+        //            sh 'terraform destroy -auto-approve'
+        //        }
+        //        dir('module_two') {
+        //            sh 'terraform init'
+        //            sh 'terraform destroy -auto-approve'
+        //        }
+        //    }
+        //}
         stage('Execute module_one.tf') {
             steps {
                echo 'Running module_one.tf'
