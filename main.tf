@@ -195,6 +195,13 @@ resource "aws_s3_bucket_object" "image3" {
   etag = filemd5("./images/nature.jpg")
   acl = "public-read"
 }
+resource "aws_s3_bucket_object" "image4" {
+  bucket = aws_s3_bucket.bucket.id
+  key    = "jenkins.jpg"
+  source = "./images/jenkins.jpg"
+  etag = filemd5("./images/jenkins.jpg")
+  acl = "public-read"
+}
 
 #####################################################################
 # PACKER
