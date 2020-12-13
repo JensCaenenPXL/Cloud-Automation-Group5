@@ -4,7 +4,12 @@
     name: mysql-client
     state: present
 
-- name: Import file.sql similar to mysql -u <username> -p <password> < hostname.sql
+-name: install python
+   apt:
+     name: python 3.X
+     state: present
+
+- name: Import file.sql
   mysql_db:
     login_user: "${{AWS__Database_username}}"
     login_password: "${{AWS__Database_password}}"
