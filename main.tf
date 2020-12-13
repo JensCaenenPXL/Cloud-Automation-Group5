@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7ROUUGKTRR"
+  default = "ASIA5547CE7RK5M2XXN5"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "VTRzqPkMUb+AS/8cYHPy51o/Zm1zRyA8faYrafi6"
+  default = "Kh8knFdcQqit/5wo2NQHkfxoEu5MbLNXYbNTdBCO"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzEDoaDJhzWG2mKihUBFMs+iKuAaErWWQPFxTkFtUe1EXjd5ZJqHN6r2qaRnXGDawGNwFfdNZXXxsK1KdS0iR1ID22KBGrU2CVhHZ4tfVkxCYWKcZJlM0CrAB3LDvFXEB29gP+Hm3QnAqjdOlKmpSJMkGJLMZU/6Q7YgN2jnzquQ2CcKcQnyJZYx7uPWikNLaKI20IbSfWsMXBmGoMNyjhWd3Os/ePfZey5wKg8r9vVsf8LL/wlxFb0x9vu8wcbiongyjkjNn+BTItHm1EDfcq5jS0OIGMCHFyduWwei9Z6ZrCQT4OM3SQAQLWzkPnmaKvgO4brLmo"
+  default = "FwoGZXIvYXdzEDsaDMR+8FDK/x6D6y0h2iKuARI/MEqjALeTgrf/E/bS8cDetWdOLen78vtFzHaZXD7sntRAtTCT06lphFgWXhoeBgF83fwAt2dRToJRzF99Z0PsSPyjeZvqmJLBth28f+PWTttxUxsZ63KOtkza6Jsq7PEOLewOKE36mN1tAGFIA/veZ4tZhew9hgODu8ZuP1APrgrTVRwue7OUVU4y0W+Skucv4XhAA/mgkycLnvxnIaUe2UHrhBe52eVsmR0JKCj4mdn+BTItb6b9Szs3POjWFTx3qkP4sTm+qm2jm0wI7dFDci+N+Yb42hoT5dYma5yuFGo7"
 }
 
 variable "private_key_path" {
@@ -265,11 +265,63 @@ resource "null_resource" "run_packer" {
   ]
 }
 
-resource "null_resource" "run_terraform" {
-  provisioner "local-exec" {
-    command = "./module_one/terraform apply -auto-approve"
+data "aws_ami" "aws-linux" {
+  most_recent = true
+  owners      = ["957574424546"]
+
+  filter {
+    name   = "name"
+    values = ["Webserver"]
   }
   depends_on = [
-    local_file.localhost_yml,
+    null_resource.run_packer,
+  ]
+}
+
+resource "aws_elb" "webserver_loadbalancer" {
+  name               = "Webserver-Loadbalancer"
+  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  security_groups = [aws_security_group.webserver_security_group.id]
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+
+  depends_on = [
+    null_resource.run_packer,
+  ]
+}
+
+resource "aws_launch_template" "webserver_launch_template" {
+  name_prefix   = "webserver_launch_template"
+  image_id      = data.aws_ami.aws-linux.id
+  instance_type = "t2.micro"
+  security_group_names = ["Webserver"]
+  depends_on = [
+    null_resource.run_packer,
+  ]
+}
+
+resource "aws_autoscaling_group" "webserver_autoscaling_group" {
+  availability_zones = ["us-east-1a"]
+  desired_capacity   = 2
+  max_size           = 3
+  min_size           = 1
+  load_balancers     = [aws_elb.webserver_loadbalancer.id]
+
+  launch_template {
+    id      = aws_launch_template.webserver_launch_template.id
+    version = "$Latest"
+  }
+  depends_on = [
+    null_resource.run_packer,
   ]
 }

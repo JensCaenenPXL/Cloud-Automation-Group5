@@ -41,15 +41,7 @@ provider "aws" {
 # DATA
 #####################################################################
 
-data "aws_ami" "aws-linux" {
-  most_recent = true
-  owners      = ["957574424546"]
 
-  filter {
-    name   = "name"
-    values = ["Webserver"]
-  }
-}
 
 data "aws_security_group" "webserver_security_group" {
   filter {
@@ -62,10 +54,10 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
-resource "aws_lb" "webserver_loadbalancer" {
+resource "aws_elb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  security_groups = [data.aws_security_group.webserver_security_group.id]
+  security_groups = [aws_security_group.webserver_security_group.id]
 
   listener {
     instance_port     = 80
@@ -90,7 +82,7 @@ resource "aws_launch_template" "webserver_launch_template" {
   name_prefix   = "webserver_launch_template"
   image_id      = data.aws_ami.aws-linux.id
   instance_type = "t2.micro"
-  security_group_id = data.aws_security_group.webserver_security_group.id
+  security_group_id = aws_security_group.webserver_security_group.id
 }
 
 resource "aws_autoscaling_group" "webserver_autoscaling_group" {
@@ -98,6 +90,7 @@ resource "aws_autoscaling_group" "webserver_autoscaling_group" {
   desired_capacity   = 2
   max_size           = 3
   min_size           = 1
+  load_balancers     = aws_elb.webserver_loadbalancer.id
 
   launch_template {
     id      = aws_launch_template.webserver_launch_template.id
