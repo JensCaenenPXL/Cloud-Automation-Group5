@@ -62,6 +62,8 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
+#help
+
 resource "aws_lb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
   internal           = false
