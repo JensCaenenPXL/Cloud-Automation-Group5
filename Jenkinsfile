@@ -14,18 +14,20 @@ pipeline {
         //        sh 'terraform destroy -f'
         //    }
         //}
-        stage('Execute module_one.tf') {
-            steps {
-                echo 'Running module_one.tf'
-                dir('module_one') {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
+        //stage('Execute module_one.tf') {
+        //    steps {
+        //       echo 'Running module_one.tf'
+        //        dir('module_one') {
+        //            sh 'terraform init'
+        //            sh 'terraform apply -auto-approve'
+        //        }
+        //    }
+        //}
         stage('Execute packer.json') {
             steps {
                 echo 'Pushing the localhost.yml to GitHub'
+                sh 'git config --global user.email "11800381@student.pxl.be"'
+                sh 'git config --global user.name "JensCaenenPXL"'
                 sh 'git commit -m "Updated localhost.yml" -a'
                 sh 'git push'
                 echo 'Running packer.json'
