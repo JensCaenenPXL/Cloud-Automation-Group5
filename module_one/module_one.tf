@@ -73,7 +73,7 @@ resource "aws_elb" "webserver_loadbalancer" {
   }
 
   listener {
-    instance_port     = 8000
+    instance_port     = 80
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
