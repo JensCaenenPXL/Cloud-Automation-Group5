@@ -19,7 +19,7 @@ pipeline {
                 echo 'Running module_one.tf'
                 dir('module_one') {
                     sh 'terraform init'
-                    sh 'terraform apply -input=false'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
                 echo 'Running module_two.tf'
                 dir('module_two') {
                     sh 'terraform init'
-                    sh 'terraform apply -input=false'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
