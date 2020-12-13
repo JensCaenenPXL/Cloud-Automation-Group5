@@ -62,25 +62,47 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
-#help
-
-resource "aws_lb" "webserver_loadbalancer" {
+resource "aws_elb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.webserver_security_group.id]
-  subnets            = aws_subnet.public.*.id
-
-  enable_deletion_protection = true
+  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
   access_logs {
-    bucket  = aws_s3_bucket.lb_logs.bucket
-    prefix  = "test-lb"
-    enabled = true
+    bucket        = "foo"
+    bucket_prefix = "bar"
+    interval      = 60
   }
 
+  listener {
+    instance_port     = 8000
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port      = 8000
+    instance_protocol  = "http"
+    lb_port            = 443
+    lb_protocol        = "https"
+    ssl_certificate_id = "arn:aws:iam::123456789012:server-certificate/certName"
+  }
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:8000/"
+    interval            = 30
+  }
+
+  instances                   = [aws_instance.foo.id]
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+
   tags = {
-    Environment = "production"
+    Name = "foobar-terraform-elb"
   }
 }
 
