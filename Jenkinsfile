@@ -15,18 +15,20 @@ pipeline {
         //        sh 'terraform destroy -auto-approve'
         //    }
         //}
-        stage('Execute module_one.tf') {
+        stage('Execute main.tf') {
             steps {
-               echo 'Running module_one.tf'
+               echo 'Running main.tf'
                 sh 'terraform init'
                 sh 'terraform apply -auto-approve'
             }
         }
-        stage('Execute module_two.tf') {
+        stage('Execute module_one.tf') {
             steps {
                echo 'Running module_two.tf'
-                sh 'terraform init'
-                sh 'terraform apply -auto-approve'
+               dir('./module_one'){
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+               }
             }
         }
     } 

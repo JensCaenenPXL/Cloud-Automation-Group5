@@ -64,12 +64,15 @@ data "aws_security_group" "webserver_security_group" {
 
 resource "aws_lb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.webserver_security_group.id]
-  subnets            = aws_subnet.public.*.id
+  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  security_groups = [data.aws_security_group.webserver_security_group.id]
 
-  enable_deletion_protection = true
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
 
   access_logs {
     bucket  = aws_s3_bucket.lb_logs.bucket
@@ -77,9 +80,10 @@ resource "aws_lb" "webserver_loadbalancer" {
     enabled = true
   }
 
-  tags = {
-    Environment = "production"
-  }
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
 }
 
 resource "aws_launch_template" "webserver_launch_template" {
