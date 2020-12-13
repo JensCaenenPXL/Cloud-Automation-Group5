@@ -258,8 +258,6 @@ resource "local_file" "packer_json" {
   ]
 }
 
-
-
 resource "null_resource" "run_packer" {
   provisioner "local-exec" {
     command = "packer build packer.json"
