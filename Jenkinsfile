@@ -8,6 +8,12 @@ pipeline {
                 sh 'packer -version'
             }
         }
+        //stage('Destroy existing infrastructure') {
+        //    steps {
+        //        echo 'Destroying existing infrastructure'
+        //        sh 'terraform destroy -f'
+        //    }
+        //}
         stage('Execute module_one.tf') {
             steps {
                 echo 'Running module_one.tf'
