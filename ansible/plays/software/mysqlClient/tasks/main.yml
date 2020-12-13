@@ -6,7 +6,7 @@
 
 - name: install python
   apt:
-    name: python 3.x
+    name: python
     state: present
 
 - name: Import file.sql
