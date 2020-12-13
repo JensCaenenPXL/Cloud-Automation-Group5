@@ -62,32 +62,11 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
-#help
-
-resource "aws_lb" "webserver_loadbalancer" {
-  name               = "Webserver-Loadbalancer"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.webserver_security_group.id]
-  subnets            = aws_subnet.public.*.id
-
-  enable_deletion_protection = true
-
-  access_logs {
-    bucket  = aws_s3_bucket.lb_logs.bucket
-    prefix  = "test-lb"
-    enabled = true
-  }
-
-  tags = {
-    Environment = "production"
-  }
-}
-
 resource "aws_launch_template" "webserver_launch_template" {
   name_prefix   = "webserver_launch_template"
   image_id      = data.aws_ami.aws-linux.id
   instance_type = "t2.micro"
+  vpc_security_group_ids = data.aws_security_group.webserver_security_group.id
 }
 
 resource "aws_autoscaling_group" "webserver_autoscaling_group" {
