@@ -28,7 +28,7 @@ pipeline {
                 echo 'Pushing the localhost.yml to GitHub'
                 sh 'git config --global user.email "11800381@student.pxl.be"'
                 sh 'git config --global user.name "JensCaenenPXL"'
-                sh 'git push origin HEAD:main'
+                sh 'git push origin main'
                 sh 'git commit -m "Updated localhost.yml" -a'
                 sh 'git push'
                 echo 'Running packer.json'
