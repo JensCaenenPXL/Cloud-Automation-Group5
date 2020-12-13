@@ -11,6 +11,7 @@ pipeline {
         stage('Destroy existing infrastructure') {
             steps {
                 echo 'Destroying existing infrastructure'
+                sh 'terraform init'
                 sh 'terraform destroy -auto-approve'
             }
         }
