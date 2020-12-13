@@ -1,5 +1,5 @@
 #####################################################################
-# VARIABLES
+# VARIABLES, PROVIDERS & DATA
 #####################################################################
 
 variable "aws_access_key" {
@@ -26,10 +26,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-#####################################################################
-# PROVIDERS
-#####################################################################
-
 provider "aws" {
   region     = var.region
   access_key = var.aws_access_key
@@ -38,17 +34,15 @@ provider "aws" {
 }
 
 #####################################################################
-# DATA
+# FASE 1
 #####################################################################
 
+# DATA
 data "aws_subnet_ids" "default_subnet_id" {
   vpc_id = aws_default_vpc.default.id
 }
 
-#####################################################################
 # RESOURCES
-#####################################################################
-
 resource "aws_default_vpc" "default" {}
 resource "aws_security_group" "webserver_security_group" {
   name        = "Webserver"
@@ -159,21 +153,6 @@ module "db" {
   vpc_security_group_ids = [aws_security_group.database_security_group.id]
 }
 
-# resource "tls_private_key" "webserver_private_key" {
-#   algorithm = "RSA"
-# }
-
-# module "key_pair" {
-#   source     = "terraform-aws-modules/key-pair/aws"
-#   key_name   = "Webserver"
-#   public_key = tls_private_key.webserver_private_key.public_key_openssh
-# }
-
-# resource "local_file" "key_file" {
-#   content  = tls_private_key.webserver_private_key.private_key_pem
-#   filename = "Webserver.pem"
-# }
-
 resource "aws_s3_bucket" "bucket" {
   bucket = "webserver.groep5"
   acl = "public-read"
@@ -211,10 +190,6 @@ resource "aws_s3_bucket_object" "image3" {
   acl = "public-read"
 }
 
-#####################################################################
-# OUTPUT
-#####################################################################
-
 resource "local_file" "localhost_yml" {
   content  = <<-DOC
     # Ansible vars_file containing variable values from Terraform.
@@ -229,11 +204,48 @@ resource "local_file" "localhost_yml" {
   filename = "../ansible/plays/host_vars/localhost.yml"
 }
 
+#####################################################################
+# FASE 2
+#####################################################################
+
+# RESOURCES
 resource "null_resource" "run_packer" {
   provisioner "local-exec" {
-    command = "packer build ../packer.json"
+    command = "packer build packer.json"
   }
-  depends_on = [
-    local_file.localhost_yml,
-  ]
 }
+
+#####################################################################
+# FASE 3
+#####################################################################
+
+# DATA
+data "aws_ami" "aws-linux" {
+  most_recent = true
+  owners      = ["957574424546"]
+
+  filter {
+    name   = "name"
+    values = ["Webserver"]
+  }
+}
+
+# RESOURCES
+resource "aws_launch_template" "webserver_launch_template" {
+  name_prefix   = "webserver_launch_template"
+  image_id      = aws_ami.aws-linux.id
+  instance_type = "t2.micro"
+}
+
+resource "aws_autoscaling_group" "webserver_autoscaling_group" {
+  availability_zones = ["us-east-1a"]
+  desired_capacity   = 2
+  max_size           = 3
+  min_size           = 1
+
+  launch_template {
+    id      = aws_launch_template.webserver_launch_template.id
+    version = "$Latest"
+  }
+}
+
