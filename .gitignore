@@ -2,7 +2,6 @@
 **/.terraform/*
 **/module_one/.terraform/*
 **/module_two/.terraform/*
-
 # .tfstate files
 *.tfstate
 *.tfstate.*

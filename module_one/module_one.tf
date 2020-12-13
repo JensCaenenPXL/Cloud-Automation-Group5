@@ -233,4 +233,7 @@ resource "null_resource" "run_packer" {
   provisioner "local-exec" {
     command = "packer build ../packer.json"
   }
+  depends_on = [
+    local_file.localhost_yml,
+  ]
 }
