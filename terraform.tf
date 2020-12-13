@@ -213,6 +213,9 @@ resource "null_resource" "run_packer" {
   provisioner "local-exec" {
     command = "packer build packer.json"
   }
+  depends_on = [
+    local_file.localhost_yml,
+  ]
 }
 
 #####################################################################
@@ -228,6 +231,9 @@ data "aws_ami" "aws-linux" {
     name   = "name"
     values = ["Webserver"]
   }
+  depends_on = [
+    null_resource.run_packer,
+  ]
 }
 
 # RESOURCES
@@ -247,5 +253,8 @@ resource "aws_autoscaling_group" "webserver_autoscaling_group" {
     id      = aws_launch_template.webserver_launch_template.id
     version = "$Latest"
   }
+  depends_on = [
+    aws_launch_template.webserver_launch_template,
+  ]
 }
 
