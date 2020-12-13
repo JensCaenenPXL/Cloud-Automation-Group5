@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7RK4UO6EVG"
+  default = "ASIA5547CE7ROUUGKTRR"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "W3me3sVucltJ8/OWOX/61YSfO8rYA/klN91Ri/fq"
+  default = "VTRzqPkMUb+AS/8cYHPy51o/Zm1zRyA8faYrafi6"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzEDgaDENhuTVJ+t4syTmMLiKuAfsH/HL3pKO/9cNCGpXg9go8mC2UTT04rmoGMu4fZz8HLKK5Ry40HQT8T8QmPBSeIQJzXuhMi6suuNUrzVucig8g/kbSGnHIrq5nHqQ5XcBbSwkyY6Vk2sPpnXXWbLfBb4CNq01O8wi0jQznPZekaA1C1igFHdE2TJxOItDxxdFcmevdKZ0T5oVdtLdB96AfTkiO6Gqb9Qf5js+wqtIYSZkKQB+yR2E03Z7rj19WsCiqxdj+BTItlBFRwl1Wv9pMLPzo89L1SsWLbb0Nf4uKAbEuWut6OvBZ8tCvBSpduY3W8AZK"
+  default = "FwoGZXIvYXdzEDoaDJhzWG2mKihUBFMs+iKuAaErWWQPFxTkFtUe1EXjd5ZJqHN6r2qaRnXGDawGNwFfdNZXXxsK1KdS0iR1ID22KBGrU2CVhHZ4tfVkxCYWKcZJlM0CrAB3LDvFXEB29gP+Hm3QnAqjdOlKmpSJMkGJLMZU/6Q7YgN2jnzquQ2CcKcQnyJZYx7uPWikNLaKI20IbSfWsMXBmGoMNyjhWd3Os/ePfZey5wKg8r9vVsf8LL/wlxFb0x9vu8wcbiongyjkjNn+BTItHm1EDfcq5jS0OIGMCHFyduWwei9Z6ZrCQT4OM3SQAQLWzkPnmaKvgO4brLmo"
 }
 
 variable "private_key_path" {
