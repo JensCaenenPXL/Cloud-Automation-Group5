@@ -29,7 +29,6 @@ pipeline {
                 sh 'git config --global user.email \"11800381@student.pxl.be\"'
                 sh 'git config --global user.name \"JensCaenenPXL\"'
                 sh 'git add .'
-                sh 'git checkout main'
                 sh 'git push'
                 sh 'git commit -m "Updated localhost.yml" -a'
                 sh 'git push'
