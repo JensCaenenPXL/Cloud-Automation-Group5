@@ -28,7 +28,7 @@ pipeline {
                 echo 'Pushing the localhost.yml to GitHub'
                 sh 'git config --global user.email "11800381@student.pxl.be"'
                 sh 'git config --global user.name "JensCaenenPXL"'
-                sh 'git add module_one/ansible -f'
+                sh 'git add module_one/ansible'
                 sh 'git commit -m "Updated localhost.yml" -a'
                 sh 'git push'
                 echo 'Running packer.json'
