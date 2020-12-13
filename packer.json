@@ -1,18 +1,23 @@
 {
     "builders": [{
         "type": "amazon-ebs",
-        "access_key": "ASIA5547CE7RKGJABF7T",
-        "secret_key": "Qd8dCobuqW3Bxfxsjr40ocp4JLm11XzlGYYxJWlm",
-        "token": "FwoGZXIvYXdzEDQaDM+D+3kbuSQgT3xa8CKuAcg3x801g9RH//g+KFkI1FeT80c7oSfS4b2mVHhzgD+wHI8v4xMYOM7ZgqcfXxs2CVww6LUPB/ePQPrqqfmPqNwgjVM2/4HVL3+cguvA+6AOyfQViIb8HRp3olNlBPTkShr1AKlZgv9Y9l4zJoNInrBHZX+KcQwsvzrG+fUm+HBl5HhubW1KmkUzgiwOJKDOzFYHonUGr+MxdxxNh1/C0wj1bQxGsCBViFBwKq7Q9yiA4tf+BTItNDwmaH6zgiMx5F9fqhoE+hp3yH7ztZ21Ys+b5dTUbC/NH9YirfyrXj35uu6o",
+        "access_key": "ASIA5547CE7RHYH6SVNR",
+        "secret_key": "TPJuNDBCa+LnDm2e5wlkexQde+lw4P4/vnmfisE/",
+        "token": "FwoGZXIvYXdzEDcaDMYek6edPP4BUR1gXCKuAWX0NLSn6dofwe+n/rSY1s+heGrdxWc9yRSLsU+5aJ+1L4742IP1lot7/Kg357d6HPGugLi2RXFItL0Jq/1C1IpTHKh55Ro+211X3O9UZxruTN6BL9XVNenti2jANG7Ar0AP4MhNj/3o6lmTVrZSSCvwMBNVdisU5qQxLc82lOfsGLxUoHFpxZWs+pazbK+FIl97K95BD4QqDZ0V844m5S+RGFP3kquGXZpGEDrWYSiKttj+BTIt//JHX+ipb7WODcz1699hjJlUJk/EcHXuKvcj34GxMYw3NRx9hNZO/0tvUKtJ",
         "region": "us-east-1",
         "source_ami": "ami-00ddb0e5626798373",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
-        "security_group_id": "sg-0c63786c3ee8fc65f",
+        "security_group_id": "sg-0a19385ebf7f2d3aa",
         "force_deregister": true
     }],
     "provisioners": [
+        {
+            "type": "file",
+            "source": "./ansible",
+            "destination": "./"
+        },  
         {
             "type": "shell",
             "inline": [
@@ -21,9 +26,8 @@
                 "sudo apt-add-repository --yes --update ppa:ansible/ansible",
                 "sudo apt install ansible -y",
                 "sudo apt install git -y",
-                "git clone https://github.com/JensCaenenPXL/Cloud-Automation-Group5.git",
-                "ansible-playbook ./Cloud-Automation-Group5/ansible/plays/webserver.yml"
-            ]
-        }  
+                "ansible-playbook ./ansible/plays/webserver.yml"
+            ]  
+        }
     ]
 }

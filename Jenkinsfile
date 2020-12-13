@@ -29,9 +29,8 @@ pipeline {
                 sh 'git config --global user.email "11800381@student.pxl.be"'
                 sh 'git config --global user.name "JensCaenenPXL"'
                 sh 'git add .'
-                sh 'git push origin main'
                 sh 'git commit -m "Updated localhost.yml" -a'
-                sh 'git push'
+                sh 'git push origin HEAD:main'
                 echo 'Running packer.json'
                 sh 'packer build packer.json'
             }
