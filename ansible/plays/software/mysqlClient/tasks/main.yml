@@ -5,9 +5,9 @@
     state: present
 
 - name: install python
-   apt:
-     name: python 3.X
-     state: present
+  apt:
+    name: python 3.X
+    state: present
 
 - name: Import file.sql
   mysql_db:
