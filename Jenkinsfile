@@ -11,38 +11,15 @@ pipeline {
         //stage('Destroy existing infrastructure') {
         //    steps {
         //        echo 'Destroying existing infrastructure'
-        //        dir('module_one') {
-        //            sh 'terraform init'
-        //            sh 'terraform destroy -auto-approve'
-        //        }
-        //        dir('module_two') {
-        //            sh 'terraform init'
-        //            sh 'terraform destroy -auto-approve'
-        //        }
+        //        sh 'terraform init'
+        //        sh 'terraform destroy -auto-approve'
         //    }
         //}
-        stage('Execute module_one.tf') {
+        stage('Execute Terraform') {
             steps {
                echo 'Running module_one.tf'
-                dir('module_one') {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
-        stage('Execute packer.json') {
-            steps {
-                echo 'Running packer.json'
-                sh 'packer build packer.json'
-            }
-        }
-        stage('Execute module_two.tf') {
-            steps {
-                echo 'Running module_two.tf'
-                dir('module_two') {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
-                }
+                sh 'terraform init'
+                sh 'terraform apply -auto-approve'
             }
         }
     } 
