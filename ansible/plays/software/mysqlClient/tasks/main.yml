@@ -4,16 +4,27 @@
     name: mysql-client
     state: present
 
-- name: install python
+- name: install pip
   apt:
-    name: python
+    name: python-pip
     state: present
+
+- name: install dependency
+  apt:
+    name: libmysqlclient-dev
+    state: present
+
+- name: install python
+  pip:
+    name: MySQL-python
+    state: present
+
 
 - name: Import file.sql
   mysql_db:
-    login_user: "${{AWS__Database_username}}"
-    login_password: "${{AWS__Database_password}}"
-    login_host: "${{AWS__Database_ip}}"
+    login_user: "{{AWS__Database_username}}"
+    login_password: "{{AWS__Database_password}}"
+    login_host: "{{AWS__Database_ip}}"
     state: import
     name: employees
     target: /var/www/html/2TIN_ResearchProject/employees.sql
