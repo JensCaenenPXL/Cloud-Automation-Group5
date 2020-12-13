@@ -12,6 +12,7 @@ pipeline {
             steps {
                 echo 'Destroying existing infrastructure'
                 dir('module_one') {
+                    sh 'terraform init'
                     sh 'terraform destroy -auto-approve'
                 }
             }
