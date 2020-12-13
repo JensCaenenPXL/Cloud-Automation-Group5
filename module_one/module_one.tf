@@ -62,37 +62,31 @@ data "aws_security_group" "webserver_security_group" {
 # RESOURCES
 #####################################################################
 
-resource "aws_elb" "webserver_loadbalancer" {
+resource "aws_lb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
-  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  
-  listener {
-    instance_port     = 80
-    instance_protocol = "http"
-    lb_port           = 80
-    lb_protocol       = "http"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [data.aws_security_group.webserver_security_group.id]
+  subnets            = aws_subnet.public.*.id
+
+  enable_deletion_protection = true
+
+  access_logs {
+    bucket  = aws_s3_bucket.lb_logs.bucket
+    prefix  = "test-lb"
+    enabled = true
   }
 
-  health_check {
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 3
-    target              = "HTTP:80/"
-    interval            = 30
+  tags = {
+    Environment = "production"
   }
-
-  instances                   = [aws_instance.foo.id]
-  cross_zone_load_balancing   = true
-  idle_timeout                = 400
-  connection_draining         = true
-  connection_draining_timeout = 400
 }
 
 resource "aws_launch_template" "webserver_launch_template" {
   name_prefix   = "webserver_launch_template"
   image_id      = data.aws_ami.aws-linux.id
   instance_type = "t2.micro"
-  vpc_security_group_ids = data.aws_security_group.webserver_security_group.id
+  security_group_id = data.aws_security_group.webserver_security_group.id
 }
 
 resource "aws_autoscaling_group" "webserver_autoscaling_group" {

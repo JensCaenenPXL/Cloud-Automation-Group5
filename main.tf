@@ -56,13 +56,6 @@ resource "aws_security_group" "webserver_security_group" {
   vpc_id      = aws_default_vpc.default.id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["84.195.18.71/32", "84.194.49.69/32", "193.190.154.173/32", "193.190.154.174/32", "193.190.154.175/32", "193.190.154.176/32"]
-  }
-
-  ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -88,9 +81,7 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  
+  } 
 }
 
 resource "aws_security_group" "database_security_group" {
@@ -282,4 +273,3 @@ resource "null_resource" "run_terraform" {
     local_file.localhost_yml,
   ]
 }
-
