@@ -9,7 +9,7 @@
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
-        "security_group_id": "sg-04602e8db71d6a9cd",
+        "security_group_id": "sg-0e1b4528adef510f5",
         "force_deregister": true
     }],
     "provisioners": [
