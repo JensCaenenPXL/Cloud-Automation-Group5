@@ -201,7 +201,7 @@ resource "local_file" "localhost_yml" {
     AWS__Database_name: "employees"
     AWS__S3_bucket_url: "https://s3.amazonaws.com/webserver.groep5"
     DOC
-  filename = "../ansible/plays/host_vars/localhost.yml"
+  filename = "./ansible/plays/host_vars/localhost.yml"
 }
 
 #####################################################################
