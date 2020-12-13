@@ -1,0 +1,6 @@
+---
+- name: Started Git
+  service:
+    name: git
+    state: restarted
+
