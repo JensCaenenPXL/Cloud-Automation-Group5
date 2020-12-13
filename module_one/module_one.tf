@@ -159,20 +159,20 @@ module "db" {
   vpc_security_group_ids = [aws_security_group.database_security_group.id]
 }
 
-resource "tls_private_key" "webserver_private_key" {
-  algorithm = "RSA"
-}
+# resource "tls_private_key" "webserver_private_key" {
+#   algorithm = "RSA"
+# }
 
-module "key_pair" {
-  source     = "terraform-aws-modules/key-pair/aws"
-  key_name   = "Webserver"
-  public_key = tls_private_key.webserver_private_key.public_key_openssh
-}
+# module "key_pair" {
+#   source     = "terraform-aws-modules/key-pair/aws"
+#   key_name   = "Webserver"
+#   public_key = tls_private_key.webserver_private_key.public_key_openssh
+# }
 
-resource "local_file" "key_file" {
-  content  = tls_private_key.webserver_private_key.private_key_pem
-  filename = "Webserver.pem"
-}
+# resource "local_file" "key_file" {
+#   content  = tls_private_key.webserver_private_key.private_key_pem
+#   filename = "Webserver.pem"
+# }
 
 resource "aws_s3_bucket" "bucket" {
   bucket = "webserver.groep5"
@@ -182,6 +182,7 @@ resource "aws_s3_bucket" "bucket" {
     Name = "webserver.groep5"
   }
 }
+
 resource "aws_s3_bucket_public_access_block" "bucket_access_list" {
   bucket = aws_s3_bucket.bucket.id
 
@@ -228,7 +229,3 @@ resource "local_file" "localhost_yml" {
   filename = "./ansible/plays/host_vars/localhost.yml"
 }
 
-output "this_db_instance_address" {
-  description = "The address of the RDS instance"
-  value       = module.db.this_db_instance_address
-}
