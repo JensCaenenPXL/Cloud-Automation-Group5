@@ -4,7 +4,7 @@
     name: mysql-client
     state: present
 
--name: install python
+- name: install python
    apt:
      name: python 3.X
      state: present
