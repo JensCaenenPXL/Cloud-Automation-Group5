@@ -65,7 +65,8 @@ data "aws_security_group" "webserver_security_group" {
 resource "aws_elb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  
+  security_groups = [data.aws_security_group.webserver_security_group.id]
+
   listener {
     instance_port     = 80
     instance_protocol = "http"
@@ -81,7 +82,6 @@ resource "aws_elb" "webserver_loadbalancer" {
     interval            = 30
   }
 
-  instances                   = [aws_instance.foo.id]
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
