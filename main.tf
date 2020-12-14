@@ -50,6 +50,13 @@ data "aws_subnet_ids" "default_subnet_id" {
 #####################################################################
 
 resource "aws_default_vpc" "default" {}
+
+resource "aws_security_group" "packer_security_group" {
+  name        = "Packer"
+  description = "The security group of the packer builder"
+  vpc_id      = aws_default_vpc.default.id
+}
+
 resource "aws_security_group" "webserver_security_group" {
   name        = "Webserver"
   description = "The security group of all of the webservers"
@@ -60,6 +67,7 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   ingress {
@@ -67,6 +75,7 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   egress {
@@ -74,6 +83,7 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   egress {
@@ -81,6 +91,7 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.packer_security_group.id]
   } 
 }
 
@@ -93,14 +104,14 @@ resource "aws_security_group" "database_security_group" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.webserver_security_group.id]
+    security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.packer_security_group.id]
   }
 
   egress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.webserver_security_group.id]
+    security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.packer_security_group.id]
   }
 }
 
@@ -125,6 +136,29 @@ resource "aws_security_group_rule" "webserver_security_group_edit2" {
   source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
+  ]
+}
+
+resource "aws_security_group_rule" "packer_security_group_edit1" {
+  type = "ingress"
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
+  depends_on = [
+    aws_security_group.packer_security_group,
+  ]
+}
+
+resource "aws_security_group_rule" "packer_security_group_edit2" {
+  type = "egress"
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
+  depends_on = [
+    aws_security_group.packer_security_group,
   ]
 }
 
