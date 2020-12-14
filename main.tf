@@ -371,6 +371,7 @@ resource "aws_autoscaling_group" "webserver_autoscaling_group" {
 
   launch_template {
     id      = aws_launch_template.webserver_launch_template.id
+    key_name = tls_private_key.webserver_private_key.private_key_pem
     version = "$Latest"
   }
   depends_on = [
