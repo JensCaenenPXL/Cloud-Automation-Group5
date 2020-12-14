@@ -4,16 +4,16 @@
 
 variable "aws_access_key" {
   type    = string
-  default = "ASIA5547CE7RK5M2XXN5"
+  default = "ASIA5547CE7REJWYQSWL"
 }
 variable "aws_secret_key" {
   type    = string
-  default = "Kh8knFdcQqit/5wo2NQHkfxoEu5MbLNXYbNTdBCO"
+  default = "07zd7kdKcgaLYYgTHEjR33iDgwAb34dX2YH3kBaG"
 }
 
 variable "aws_session_token" {
   type    = string
-  default = "FwoGZXIvYXdzEDsaDMR+8FDK/x6D6y0h2iKuARI/MEqjALeTgrf/E/bS8cDetWdOLen78vtFzHaZXD7sntRAtTCT06lphFgWXhoeBgF83fwAt2dRToJRzF99Z0PsSPyjeZvqmJLBth28f+PWTttxUxsZ63KOtkza6Jsq7PEOLewOKE36mN1tAGFIA/veZ4tZhew9hgODu8ZuP1APrgrTVRwue7OUVU4y0W+Skucv4XhAA/mgkycLnvxnIaUe2UHrhBe52eVsmR0JKCj4mdn+BTItb6b9Szs3POjWFTx3qkP4sTm+qm2jm0wI7dFDci+N+Yb42hoT5dYma5yuFGo7"
+  default = "FwoGZXIvYXdzEE8aDAgPb3Wps15LXiXygyKuAaizvUTAOPls1jfOXwpCUuc4zPFHfpqrWGcE2rkkls8ES6qJhWYQQ5Ypwm6i/O98AE6olDEnZ5fFGZza9ib3uLecfCs0L/Gl4ZIieLOaRxwdMS5716TaFvEil4HNSg5aQtj76QzObQVy+OM2U2WM1TQU3DK/eju5+OPI3FxePm7UuQxlI8N8WUNnUk4oiOu6r7SISbVLkzTaPol0nFbvoEHLFNZT9l2a2X1C/LjQHyiK093+BTItqeLjQpu1DmUEH9rzPYa9eGuWqMJZD3nFEOnBRhRageOD5sbpMT5/30nG/Uxt"
 }
 
 variable "private_key_path" {
@@ -94,6 +94,8 @@ resource "aws_security_group" "webserver_security_group" {
     security_groups = [aws_security_group.packer_security_group.id]
   } 
 }
+
+
 
 resource "aws_security_group" "database_security_group" {
   name        = "Database"
