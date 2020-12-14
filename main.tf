@@ -146,7 +146,7 @@ resource "aws_security_group_rule" "packer_security_group_edit1" {
   from_port       = 22
   to_port         = 22
   protocol        = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
   security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
   depends_on = [
     aws_security_group.packer_security_group,
@@ -158,6 +158,7 @@ resource "aws_security_group_rule" "packer_security_group_edit2" {
   from_port       = 22
   to_port         = 22
   protocol        = "tcp"
+  cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
   security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
   depends_on = [
     aws_security_group.packer_security_group,
@@ -263,7 +264,7 @@ resource "local_file" "packer_json" {
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "Webserver",
-        "security_group_id": "${aws_security_group.webserver_security_group.id}",
+        "security_group_id": "${aws_security_group.packer_security_group.id}",
         "force_deregister": true
     }],
     "provisioners": [
