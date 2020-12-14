@@ -51,6 +51,21 @@ data "aws_subnet_ids" "default_subnet_id" {
 
 resource "aws_default_vpc" "default" {}
 
+resource "tls_private_key" "webserver_private_key" {
+  algorithm = "RSA"
+}
+
+module "key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
+  key_name   = "Webserver"
+  public_key = tls_private_key.webserver_private_key.public_key_openssh
+}
+
+resource "local_file" "key_file" {
+  content = tls_private_key.webserver_private_key.private_key_pem
+  filename = "Webserver.pem"
+}
+
 resource "aws_security_group" "packer_security_group" {
   name        = "Packer"
   description = "The security group of the packer builder"
