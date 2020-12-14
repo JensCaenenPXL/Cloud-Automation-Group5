@@ -56,13 +56,13 @@ resource "tls_private_key" "webserver_private_key" {
 }
 
 module "key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
+  source     = "terraform-aws-modules/key-pair/aws"
   key_name   = "Webserver"
   public_key = tls_private_key.webserver_private_key.public_key_openssh
 }
 
 resource "local_file" "key_file" {
-  content = tls_private_key.webserver_private_key.private_key_pem
+  content  = tls_private_key.webserver_private_key.private_key_pem
   filename = "Webserver.pem"
 }
 
@@ -70,6 +70,13 @@ resource "aws_security_group" "packer_security_group" {
   name        = "Packer"
   description = "The security group of the packer builder"
   vpc_id      = aws_default_vpc.default.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["84.194.49.69/32", "84.195.18.71/32"]
+  }
 }
 
 resource "aws_security_group" "webserver_security_group" {
@@ -82,7 +89,6 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   ingress {
@@ -90,7 +96,6 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   egress {
@@ -98,7 +103,6 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.packer_security_group.id]
   }
 
   egress {
@@ -106,11 +110,8 @@ resource "aws_security_group" "webserver_security_group" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.packer_security_group.id]
-  } 
+  }
 }
-
-
 
 resource "aws_security_group" "database_security_group" {
   name        = "Database"
@@ -121,23 +122,23 @@ resource "aws_security_group" "database_security_group" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.packer_security_group.id]
+    security_groups = [aws_security_group.webserver_security_group.id, aws_security_group.packer_security_group.id]
   }
 
   egress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.packer_security_group.id]
+    security_groups = [aws_security_group.webserver_security_group.id, aws_security_group.packer_security_group.id]
   }
 }
 
 resource "aws_security_group_rule" "webserver_security_group_edit1" {
-  type              = "ingress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  security_group_id = aws_security_group.webserver_security_group.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.webserver_security_group.id
   source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
@@ -145,11 +146,11 @@ resource "aws_security_group_rule" "webserver_security_group_edit1" {
 }
 
 resource "aws_security_group_rule" "webserver_security_group_edit2" {
-  type              = "egress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  security_group_id = aws_security_group.webserver_security_group.id
+  type                     = "egress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.webserver_security_group.id
   source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.webserver_security_group,
@@ -157,24 +158,24 @@ resource "aws_security_group_rule" "webserver_security_group_edit2" {
 }
 
 resource "aws_security_group_rule" "packer_security_group_edit1" {
-  type            = "ingress"
-  from_port       = 22
-  to_port         = 22
-  protocol        = "tcp"
-  cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
-  security_group_id = aws_security_group.database_security_group.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.packer_security_group.id
+  source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.packer_security_group,
   ]
 }
 
 resource "aws_security_group_rule" "packer_security_group_edit2" {
-  type            = "egress"
-  from_port       = 22
-  to_port         = 22
-  protocol        = "tcp"
-  cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
-  security_group_id = aws_security_group.database_security_group.id
+  type                     = "egress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.packer_security_group.id
+  source_security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.packer_security_group,
   ]
@@ -198,13 +199,13 @@ module "db" {
   backup_window      = "03:00-06:00"
   maintenance_window = "Mon:00:00-Mon:03:00"
 
-  subnet_ids = data.aws_subnet_ids.default_subnet_id.ids
+  subnet_ids             = data.aws_subnet_ids.default_subnet_id.ids
   vpc_security_group_ids = [aws_security_group.database_security_group.id]
 }
 
 resource "aws_s3_bucket" "bucket" {
   bucket = "webserver.groep5"
-  acl = "public-read"
+  acl    = "public-read"
 
   tags = {
     Name = "webserver.groep5"
@@ -221,29 +222,29 @@ resource "aws_s3_bucket_object" "image1" {
   bucket = aws_s3_bucket.bucket.id
   key    = "fjords.jpg"
   source = "./images/fjords.jpg"
-  etag = filemd5("./images/fjords.jpg")
-  acl = "public-read"
+  etag   = filemd5("./images/fjords.jpg")
+  acl    = "public-read"
 }
 resource "aws_s3_bucket_object" "image2" {
   bucket = aws_s3_bucket.bucket.id
   key    = "lights.jpg"
   source = "./images/lights.jpg"
-  etag = filemd5("./images/lights.jpg")
-  acl = "public-read"
+  etag   = filemd5("./images/lights.jpg")
+  acl    = "public-read"
 }
 resource "aws_s3_bucket_object" "image3" {
   bucket = aws_s3_bucket.bucket.id
   key    = "nature.jpg"
   source = "./images/nature.jpg"
-  etag = filemd5("./images/nature.jpg")
-  acl = "public-read"
+  etag   = filemd5("./images/nature.jpg")
+  acl    = "public-read"
 }
 resource "aws_s3_bucket_object" "image4" {
   bucket = aws_s3_bucket.bucket.id
   key    = "jenkins.jpg"
   source = "./images/jenkins.jpg"
-  etag = filemd5("./images/jenkins.jpg")
-  acl = "public-read"
+  etag   = filemd5("./images/jenkins.jpg")
+  acl    = "public-read"
 }
 
 #####################################################################
@@ -333,7 +334,7 @@ data "aws_ami" "aws-linux" {
 resource "aws_elb" "webserver_loadbalancer" {
   name               = "Webserver-Loadbalancer"
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  security_groups = [aws_security_group.webserver_security_group.id]
+  security_groups    = [aws_security_group.webserver_security_group.id]
 
   listener {
     instance_port     = 80
@@ -353,11 +354,11 @@ resource "aws_elb" "webserver_loadbalancer" {
 }
 
 resource "aws_launch_template" "webserver_launch_template" {
-  name_prefix   = "webserver_launch_template"
-  image_id      = data.aws_ami.aws-linux.id
-  instance_type = "t2.micro"
+  name_prefix          = "webserver_launch_template"
+  image_id             = data.aws_ami.aws-linux.id
+  instance_type        = "t2.micro"
   security_group_names = ["Webserver"]
-  key_name = tls_private_key.webserver_private_key.private_key_pem
+  key_name             = tls_private_key.webserver_private_key.private_key_pem
   depends_on = [
     null_resource.run_packer,
   ]
