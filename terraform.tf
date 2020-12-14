@@ -157,24 +157,24 @@ resource "aws_security_group_rule" "webserver_security_group_edit2" {
 }
 
 resource "aws_security_group_rule" "packer_security_group_edit1" {
-  type = "ingress"
+  type            = "ingress"
   from_port       = 22
   to_port         = 22
   protocol        = "tcp"
   cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
-  security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
+  security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.packer_security_group,
   ]
 }
 
 resource "aws_security_group_rule" "packer_security_group_edit2" {
-  type = "egress"
+  type            = "egress"
   from_port       = 22
   to_port         = 22
   protocol        = "tcp"
   cidr_blocks = ["84.194.49.69/32","84.195.18.71/32"]
-  security_groups = [aws_security_group.webserver_security_group.id,aws_security_group.database_security_group.id]
+  security_group_id = aws_security_group.database_security_group.id
   depends_on = [
     aws_security_group.packer_security_group,
   ]
@@ -357,6 +357,7 @@ resource "aws_launch_template" "webserver_launch_template" {
   image_id      = data.aws_ami.aws-linux.id
   instance_type = "t2.micro"
   security_group_names = ["Webserver"]
+  key_name = tls_private_key.webserver_private_key.private_key_pem
   depends_on = [
     null_resource.run_packer,
   ]
@@ -371,7 +372,6 @@ resource "aws_autoscaling_group" "webserver_autoscaling_group" {
 
   launch_template {
     id      = aws_launch_template.webserver_launch_template.id
-    key_name = tls_private_key.webserver_private_key.private_key_pem
     version = "$Latest"
   }
   depends_on = [
